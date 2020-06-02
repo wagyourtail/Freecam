@@ -66,7 +66,7 @@ public class Freecam implements ClientModInitializer {
         KeyEvent.EVENT.register((window, key, scancode, action, mods) -> {
             MinecraftClient mc = MinecraftClient.getInstance();
             
-            if (keyBinding.matchesKey(key, scancode) && action == 1) {
+            if (keyBinding.matchesKey(key, scancode) && action == 1 && mc.currentScreen == null) {
             	isFreecam = !isFreecam; 
             	if (isFreecam && mc.player != null) {
             		//doing hunger like this (setting same hunger manager) might not be the best way...

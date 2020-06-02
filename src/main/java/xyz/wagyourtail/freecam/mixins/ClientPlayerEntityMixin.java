@@ -20,6 +20,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	@Final
 	protected MinecraftClient client;
 	
+	// this allows for the player to move from baritone.
 	@Overwrite
 	public boolean isCamera() {
 		return this.client.getCameraEntity() == this || Freecam.isFreecam;
