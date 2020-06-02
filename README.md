@@ -1,9 +1,6 @@
-# Fabric Example Mod
+# Fabritone compliant Freecam mod.
 
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+## Known Issues
+* it doesn't actually render the client player entity.
+* sometimes the look-direction gets overridden by baritone.
+* the hotbar isn't properly copied into the freecam. 
