@@ -7,9 +7,7 @@ import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
 import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.EntityType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -18,7 +16,7 @@ import xyz.wagyourtail.freecam.event.KeyEvent;
 public class Freecam implements ClientModInitializer {
 	public static final String MOD_ID = "freecam";
 	private static FabricKeyBinding keyBinding;
-	private static CameraEntity fakePlayer;
+	public static CameraEntity fakePlayer;
 	private static float upV;
 	private static float forwardV;
 	private static float sideV;
@@ -37,11 +35,14 @@ public class Freecam implements ClientModInitializer {
         	if (fakePlayer != null) {
         		MinecraftClient mc = MinecraftClient.getInstance();
         		
-        		fakePlayer.setHealth(mc.player.getHealth());
-        		//figure out how to un-tie this from the actual player
-        		fakePlayer.setYaw(mc.player.yaw);
-        		fakePlayer.setHeadYaw(mc.player.headYaw);
-        		fakePlayer.pitch = mc.player.pitch;
+        		if (mc.player != null) fakePlayer.setHealth(mc.player.getHealth());
+        		
+        		fakePlayer.setHeadYaw(fakePlayer.yaw);
+        		// fixed with a mixin yeet
+//        		figure out how to un-tie this from the actual player
+//        		fakePlayer.setYaw(mc.player.yaw);
+//        		fakePlayer.setHeadYaw(mc.player.headYaw);
+//        		fakePlayer.pitch = mc.player.pitch;
         		
         		
         		

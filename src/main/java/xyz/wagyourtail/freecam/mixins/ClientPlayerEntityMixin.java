@@ -20,6 +20,15 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	@Final
 	protected MinecraftClient client;
 	
+	@Override
+	public void changeLookDirection(double dx, double dy) {
+		if (this.equals(client.player) && Freecam.isFreecam && Freecam.fakePlayer != null) {
+			Freecam.fakePlayer.changeLookDirection(dx, dy);
+		} else {
+			super.changeLookDirection(dx, dy);
+		}
+	}
+	
 	// this allows for the player to move from baritone.
 	@Overwrite
 	public boolean isCamera() {
