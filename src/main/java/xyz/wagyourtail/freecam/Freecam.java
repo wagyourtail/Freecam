@@ -23,6 +23,13 @@ public class Freecam implements ClientModInitializer {
 	private static int savedPerspective;
 	public static boolean isFreecam = false;
 	
+	private static boolean forwardKey;
+	private static boolean backwardKey;
+	private static boolean leftKey;
+	private static boolean rightKey;
+	private static boolean upKey;
+	private static boolean downKey;
+	
 	
 	@Override
 	public void onInitializeClient() {
@@ -42,6 +49,10 @@ public class Freecam implements ClientModInitializer {
         		//this is stupid do this different, see comment about movement below.
         		float speed = .25F;
         		fakePlayer.setVelocity(0, 0, 0);
+        		
+        		forwardV = (forwardKey ? 1 : 0) - (backwardKey ? 1 : 0);
+        		sideV = (leftKey ? 1 : 0) - (rightKey ? 1 : 0);
+        		upV = (upKey ? 1 : 0) - (downKey ? 1 : 0);
         		
         		Vec3d forward = new Vec3d(0, 0, speed * 2.5).rotateY(-(float) Math.toRadians(fakePlayer.headYaw));
         		Vec3d strafe = forward.rotateY((float) Math.toRadians(90));
@@ -79,30 +90,30 @@ public class Freecam implements ClientModInitializer {
             
             //this is stupid do this different.
             // game input for the mc.player is overridden by Baritone [here](https://github.com/cabaletta/baritone/blob/master/src/main/java/baritone/utils/InputOverrideHandler.java#L114). Freecam should leave this as-is when Baritone is pathing. When Baritone is not pathing, it needs to override mc.player.input itself to something that ignores all input. 
-            if (isFreecam) {            	
+            if (isFreecam) {
 	            if (mc.options.keyForward.matchesKey(key, scancode)) {
-	            	if (action > 0) forwardV = 1.0F;
-	            	else forwardV = 0;
+	            	if (action > 0) forwardKey = true;
+	            	else forwardKey = false;
 	            	return ActionResult.FAIL;
 	            } else if (mc.options.keyBack.matchesKey(key, scancode)) {
-	            	if (action > 0) forwardV = -1.0F;
-	            	else forwardV = 0;
+	            	if (action > 0) backwardKey = true;
+	            	else backwardKey = false;
 	            	return ActionResult.FAIL;
 	            } else if (mc.options.keyLeft.matchesKey(key, scancode)) {
-	            	if (action > 0) sideV = 1.0F;
-	            	else sideV = 0;
+	            	if (action > 0) leftKey = true;
+	            	else leftKey = false;
 	            	return ActionResult.FAIL;
 	            } else if (mc.options.keyRight.matchesKey(key, scancode)) {
-	            	if (action > 0) sideV = -1.0F;
-	            	else sideV = 0;
+	            	if (action > 0) rightKey = true;
+	            	else rightKey = false;
 	            	return ActionResult.FAIL;
 	            } else if ((mc.options.keyJump.matchesKey(key, scancode))) {
-	            	if (action > 0) upV = 1.0F;
-	            	else upV = 0;
+	            	if (action > 0) upKey = true;
+	            	else upKey = false;
 	            	return ActionResult.FAIL;
 	            } else if (mc.options.keySneak.matchesKey(key, scancode)) {
-	            	if (action > 0) upV = -1.0F;
-	            	else upV = 0;
+	            	if (action > 0) downKey = true;
+	            	else downKey = false;
 	            	return ActionResult.FAIL;
 	            }
             }
