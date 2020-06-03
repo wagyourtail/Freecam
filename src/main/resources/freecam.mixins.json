@@ -7,7 +7,8 @@
   ],
   "client": [
     "ClientPlayerEntityMixin",
-    "KeyboardMixin"
+    "KeyboardMixin",
+    "ClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

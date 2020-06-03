@@ -16,6 +16,7 @@ import xyz.wagyourtail.freecam.Freecam;
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
+	
 	@Shadow
 	@Final
 	protected MinecraftClient client;

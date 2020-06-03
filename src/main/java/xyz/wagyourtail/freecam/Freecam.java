@@ -38,14 +38,6 @@ public class Freecam implements ClientModInitializer {
         		if (mc.player != null) fakePlayer.setHealth(mc.player.getHealth());
         		
         		fakePlayer.setHeadYaw(fakePlayer.yaw);
-        		// fixed with a mixin yeet
-//        		figure out how to un-tie this from the actual player
-//        		fakePlayer.setYaw(mc.player.yaw);
-//        		fakePlayer.setHeadYaw(mc.player.headYaw);
-//        		fakePlayer.pitch = mc.player.pitch;
-        		
-        		
-        		
 
         		//this is stupid do this different, see comment about movement below.
         		float speed = .25F;
