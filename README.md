@@ -1,4 +1,5 @@
 # Fabritone compliant Freecam mod.
 
 ## Known Issues
-* it doesn't actually render the client player entity.
+none.
+please submit issues to the Issues tracker.
