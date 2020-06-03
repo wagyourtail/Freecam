@@ -38,15 +38,10 @@ public class Freecam implements ClientModInitializer {
         		
         		if (mc.player != null) fakePlayer.setHealth(mc.player.getHealth());
     			if (mc.options.perspective != 0) mc.options.perspective = 0;
-        		
-        		
-        		fakePlayer.setHeadYaw(fakePlayer.yaw);
 
         		//this is stupid do this different, see comment about movement below.
         		float speed = .25F;
-        		
         		fakePlayer.setVelocity(0, 0, 0);
-        		
         		
         		Vec3d forward = new Vec3d(0, 0, speed * 2.5).rotateY(-(float) Math.toRadians(fakePlayer.headYaw));
         		Vec3d strafe = forward.rotateY((float) Math.toRadians(90));
@@ -83,7 +78,7 @@ public class Freecam implements ClientModInitializer {
             }
             
             //this is stupid do this different.
-            // game input for the mc.player is overridden by Baritone [here](https://github.com/cabaletta/baritone/blob/master/src/main/java/baritone/utils/InputOverrideHandler.java#L114). Freecam should leave this as-is when Baritone is pathing. When Baritone is not pathing, it needs to override mc.player.movementInput itself to something that ignores all input. 
+            // game input for the mc.player is overridden by Baritone [here](https://github.com/cabaletta/baritone/blob/master/src/main/java/baritone/utils/InputOverrideHandler.java#L114). Freecam should leave this as-is when Baritone is pathing. When Baritone is not pathing, it needs to override mc.player.input itself to something that ignores all input. 
             if (isFreecam) {            	
 	            if (mc.options.keyForward.matchesKey(key, scancode)) {
 	            	if (action > 0) forwardV = 1.0F;

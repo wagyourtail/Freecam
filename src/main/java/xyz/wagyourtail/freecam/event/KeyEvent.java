@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.util.ActionResult;
 
+
+//standard fabric event interface
 public interface KeyEvent {
     Event<KeyEvent> EVENT = EventFactory.createArrayBacked(KeyEvent.class, 
         (listeners) -> (window, key, scancode, action, mods) -> {

@@ -15,7 +15,8 @@ public class CameraEntity extends OtherClientPlayerEntity {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	//make it not render because the constant 3rd person needed for rendering the actual mc.player
+	//causes this to be rendered blocking the camera
 	public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
 		return false;
 	}
@@ -24,6 +25,8 @@ public class CameraEntity extends OtherClientPlayerEntity {
 		return false;
 	}
 	
+	
+	// spawn and despawn entity from the world.
 	public void spawn() {
 		MinecraftClient mc = MinecraftClient.getInstance();
 		mc.world.addEntity(this.getEntityId(), this);

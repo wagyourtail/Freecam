@@ -20,6 +20,8 @@ public class CameraMixin {
 	@Shadow
 	private boolean thirdPerson;
 	
+	
+	//overwrite the default minecraft functions here allows for mc.player to render
 	@Overwrite
 	public Entity getFocusedEntity() {
 		MinecraftClient mc = MinecraftClient.getInstance();

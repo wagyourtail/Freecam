@@ -21,10 +21,13 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	@Final
 	protected MinecraftClient client;
 	
+	
+	//redirect mouse movement look stuff to the freecam entity.
 	@Override
 	public void changeLookDirection(double dx, double dy) {
 		if (this.equals(client.player) && Freecam.isFreecam && Freecam.fakePlayer != null) {
 			Freecam.fakePlayer.changeLookDirection(dx, dy);
+			Freecam.fakePlayer.setHeadYaw(Freecam.fakePlayer.yaw);
 		} else {
 			super.changeLookDirection(dx, dy);
 		}

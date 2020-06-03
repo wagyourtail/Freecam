@@ -13,6 +13,9 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin {
+	
+	// this fixes the "Attempting to attack an invalid entity" issue. idk which one so i just checked both because
+	// it was easier.
 	@Inject(at = @At("HEAD"), method = "attackEntity", cancellable = true)
 	private void attackEntity(PlayerEntity player, Entity target, CallbackInfo info) {
 		if (target.equals(player) || target.equals(Freecam.fakePlayer)) {
