@@ -20,6 +20,7 @@ public class Freecam implements ClientModInitializer {
 	private static float upV;
 	private static float forwardV;
 	private static float sideV;
+	private static int savedPerspective;
 	public static boolean isFreecam = false;
 	
 	
@@ -36,6 +37,8 @@ public class Freecam implements ClientModInitializer {
         		MinecraftClient mc = MinecraftClient.getInstance();
         		
         		if (mc.player != null) fakePlayer.setHealth(mc.player.getHealth());
+    			if (mc.options.perspective != 0) mc.options.perspective = 0;
+        		
         		
         		fakePlayer.setHeadYaw(fakePlayer.yaw);
 
@@ -67,8 +70,11 @@ public class Freecam implements ClientModInitializer {
             		fakePlayer.copyPositionAndRotation(mc.player);
             		fakePlayer.setHeadYaw(mc.player.headYaw);
         			fakePlayer.spawn();
+        			savedPerspective = mc.options.perspective;
+        			mc.options.perspective = 0;
             		mc.setCameraEntity(fakePlayer);
             	} else {
+            		mc.options.perspective = savedPerspective;
             		mc.setCameraEntity(mc.player);
             		if (fakePlayer != null) fakePlayer.despawn();
             		fakePlayer = null;

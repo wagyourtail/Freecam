@@ -15,6 +15,15 @@ public class CameraEntity extends OtherClientPlayerEntity {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
+		return false;
+	}
+	
+	public boolean shouldRender(double distance) {
+		return false;
+	}
+	
 	public void spawn() {
 		MinecraftClient mc = MinecraftClient.getInstance();
 		mc.world.addEntity(this.getEntityId(), this);

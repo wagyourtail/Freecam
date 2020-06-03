@@ -9,7 +9,8 @@
     "ClientPlayerEntityMixin",
     "KeyboardMixin",
     "ClientPlayerInteractionManagerMixin",
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "CameraMixin"
   ],
   "injectors": {
     "defaultRequire": 1
