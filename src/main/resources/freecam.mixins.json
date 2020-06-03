@@ -10,7 +10,8 @@
     "KeyboardMixin",
     "ClientPlayerInteractionManagerMixin",
     "InGameHudMixin",
-    "CameraMixin"
+    "CameraMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
