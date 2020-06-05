@@ -11,7 +11,6 @@ import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 import xyz.wagyourtail.freecam.event.KeyEvent;
 
 public class Freecam implements ClientModInitializer {
@@ -20,18 +19,8 @@ public class Freecam implements ClientModInitializer {
 	private static FabricKeyBinding keyBinding;
 	public static CameraEntity fakePlayer;
 	public static float speed;
-//	private static float upV;
-//	private static float forwardV;
-//	private static float sideV;
 	private static int savedPerspective;
 	public static boolean isFreecam = false;
-//	
-//	private static boolean forwardKey;
-//	private static boolean backwardKey;
-//	private static boolean leftKey;
-//	private static boolean rightKey;
-//	private static boolean upKey;
-//	private static boolean downKey;
 //	
 	
 	public void enableFreecam() {
@@ -57,7 +46,6 @@ public class Freecam implements ClientModInitializer {
     public void setSpeed(float set) {
     	speed = set;
     }
-	
 	
 	@Override
 	public void onInitializeClient() {
