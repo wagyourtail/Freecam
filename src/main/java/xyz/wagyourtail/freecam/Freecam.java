@@ -33,6 +33,9 @@ public class Freecam implements ClientModInitializer {
 			savedPerspective = mc.options.perspective;
 			mc.options.perspective = 0;
 			mc.setCameraEntity(fakePlayer);
+			
+			// instanceof neccecairy for baritone
+			if (mc.player.input instanceof KeyboardInput) mc.player.input = new DummyInput();
 		}
     }
     
@@ -41,6 +44,9 @@ public class Freecam implements ClientModInitializer {
 		mc.setCameraEntity(mc.player);
 		if (fakePlayer != null) fakePlayer.despawn();
 		fakePlayer = null;
+
+		// instanceof neccecairy for baritone
+		if (mc.player.input instanceof DummyInput) mc.player.input = new KeyboardInput(mc.options);
     }
     
     public void setSpeed(float set) {
