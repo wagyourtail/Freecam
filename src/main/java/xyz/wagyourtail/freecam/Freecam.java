@@ -88,7 +88,7 @@ public class Freecam implements ClientModInitializer {
         	
             if (keyBinding.matchesKey(key, scancode) && action == 1 && mc.currentScreen == null) {
             	if (isFreecam) {
-        			this.disable();
+        		this.disable();
             	} else {
             		this.enable();
             	}
