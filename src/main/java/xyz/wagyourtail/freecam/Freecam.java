@@ -85,7 +85,6 @@ public class Freecam implements ClientModInitializer {
         
         //keybind call shit
         KeyEvent.EVENT.register((window, key, scancode, action, mods) -> {
-        	
             if (keyBinding.matchesKey(key, scancode) && action == 1 && mc.currentScreen == null) {
             	if (isFreecam) {
         		this.disable();
@@ -93,8 +92,7 @@ public class Freecam implements ClientModInitializer {
             		this.enable();
             	}
             }
-            
-			return ActionResult.PASS;
+            return ActionResult.PASS;
         });
         
 	}
