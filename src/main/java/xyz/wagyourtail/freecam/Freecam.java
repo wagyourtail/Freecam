@@ -21,10 +21,10 @@ public class Freecam implements ClientModInitializer {
 	public static float speed;
 	private static int savedPerspective;
 	public static boolean isFreecam = false;
-//	
 	
-	public void enableFreecam() {
+	public void enable() {
 		if (mc.player != null) {
+			isFreecam = true;
 			//doing hunger like this (setting same hunger manager) might not be the best way but idk...
 			fakePlayer = new CameraEntity(mc.world, mc.player.getGameProfile(), mc.player.getHungerManager());
 			fakePlayer.copyPositionAndRotation(mc.player);
@@ -39,7 +39,8 @@ public class Freecam implements ClientModInitializer {
 		}
     }
     
-    public void disableFreecam() {
+    public void disable() {
+    	isFreecam = false;
     	mc.options.perspective = savedPerspective;
 		mc.setCameraEntity(mc.player);
 		if (fakePlayer != null) fakePlayer.despawn();
@@ -48,16 +49,12 @@ public class Freecam implements ClientModInitializer {
 		// instanceof neccecairy for baritone
 		if (mc.player.input instanceof DummyInput) mc.player.input = new KeyboardInput(mc.options);
     }
-    
-    public void setSpeed(float set) {
-    	speed = set;
-    }
 	
 	@Override
 	public void onInitializeClient() {
 		// TODO Auto-generated method stub
 		mc = MinecraftClient.getInstance();
-		setSpeed(.25F); //default speed
+		speed = .25F; //default speed
 		
 		keyBinding = FabricKeyBinding.Builder.create(new Identifier("freecam", "toggle"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_U, "Freecam").build();
         KeyBindingRegistry.INSTANCE.addCategory("Freecam");
@@ -73,7 +70,7 @@ public class Freecam implements ClientModInitializer {
     		}
     		
     		if (isFreecam && fakePlayer == null) {
-    			disableFreecam();
+    			disable();
     		}
     		
         	if (fakePlayer != null) {
@@ -86,14 +83,14 @@ public class Freecam implements ClientModInitializer {
         	}
         });
         
+        //keybind call shit
         KeyEvent.EVENT.register((window, key, scancode, action, mods) -> {
-            
+        	
             if (keyBinding.matchesKey(key, scancode) && action == 1 && mc.currentScreen == null) {
-            	isFreecam = !isFreecam; 
             	if (isFreecam) {
-        			this.enableFreecam();
+        			this.disable();
             	} else {
-            		this.disableFreecam();
+            		this.enable();
             	}
             }
             

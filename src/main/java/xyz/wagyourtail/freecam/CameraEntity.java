@@ -31,6 +31,9 @@ public class CameraEntity extends OtherClientPlayerEntity {
 		return false;
 	}
 	
+	public boolean shouldRenderName() {
+		return false;
+	}
 	
 	// spawn and despawn entity from the world.
 	public void spawn() {
