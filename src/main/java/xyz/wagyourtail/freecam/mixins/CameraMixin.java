@@ -1,8 +1,9 @@
 package xyz.wagyourtail.freecam.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.At;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -11,22 +12,24 @@ import xyz.wagyourtail.freecam.Freecam;
 
 @Mixin(Camera.class)
 public class CameraMixin {
-	@Shadow
-	private Entity focusedEntity;
-	
-	@Shadow
-	private boolean thirdPerson;
-	
-	
-	//overwrite the default minecraft functions here allows for mc.player to render
-	@Overwrite
-	public Entity getFocusedEntity() {
-		MinecraftClient mc = MinecraftClient.getInstance();
-		return Freecam.isFreecam ? (Entity) mc.player : focusedEntity;
+    
+	// makes mc.player render while in freecam.
+    
+    
+	@Inject(at = @At("HEAD"), cancellable = true, method ="getFocusedEntity")
+	public void getFocusedEntity(CallbackInfoReturnable<Entity> info) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+	    if (Freecam.isFreecam) {
+	        info.setReturnValue(mc.player);
+	        info.cancel();
+	    }
 	}
 	
-	@Overwrite
-	public boolean isThirdPerson() {
-		return thirdPerson || Freecam.isFreecam;
+	@Inject(at = @At("HEAD"), cancellable = true, method= "isThirdPerson")
+	public void isThirdPerson(CallbackInfoReturnable<Boolean> info) {
+		if (Freecam.isFreecam) {
+		    info.setReturnValue(true);
+		    info.cancel();
+		}
 	}
 }

@@ -62,40 +62,38 @@ public class Freecam implements ClientModInitializer {
         
         
         ClientTickCallback.EVENT.register(e -> {
-        	
-    		if (mc.player == null && isFreecam  == true) {
-    			mc.options.perspective = savedPerspective;
-    			isFreecam = false;
-    			fakePlayer = null;
-    		}
-    		
-    		if (isFreecam && fakePlayer == null) {
-    			disable();
-    		}
-    		
-        	if (fakePlayer != null) {
-        		fakePlayer.setHealth(mc.player.getHealth());
-    			if (mc.options.perspective != 0) mc.options.perspective = 0;
-    			
-    			//the instanceof allows baritone to keep working as it replaces the mc.player.input
-    			if (mc.player != null && mc.player.input instanceof KeyboardInput) mc.player.input = new DummyInput();
-    			fakePlayer.tickMovement();
-        	}
+            if (mc.player == null && isFreecam  == true) {
+                mc.options.perspective = savedPerspective;
+                isFreecam = false;
+                fakePlayer = null;
+            }
+            
+            if (isFreecam && fakePlayer == null) {
+                disable();
+            }
+            
+            if (fakePlayer != null) {
+                fakePlayer.setHealth(mc.player.getHealth());
+                if (mc.options.perspective != 0) mc.options.perspective = 0;
+                
+                //the instanceof allows baritone to keep working as it replaces the mc.player.input
+                if (mc.player != null && mc.player.input instanceof KeyboardInput) mc.player.input = new DummyInput();
+                fakePlayer.tickMovement();
+            }
         });
         
         //keybind call shit
         KeyEvent.EVENT.register((window, key, scancode, action, mods) -> {
             if (keyBinding.matchesKey(key, scancode) && action == 1 && mc.currentScreen == null) {
-            	if (isFreecam) {
-        		this.disable();
-            	} else {
-            		this.enable();
-            	}
+                if (isFreecam) {
+                    this.disable();
+                } else {
+                    this.enable();
+                }
             }
             return ActionResult.PASS;
-        });
-        
-	}
+        });    
+    }
 
 	
 }

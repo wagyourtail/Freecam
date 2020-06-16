@@ -2,8 +2,10 @@ package xyz.wagyourtail.freecam.mixins;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.At;
 
 import com.mojang.authlib.GameProfile;
 
@@ -34,9 +36,12 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	}
 	
 	// this allows for the player to move from baritone.
-	@Overwrite
-	public boolean isCamera() {
-		return this.client.getCameraEntity() == this || Freecam.isFreecam;
+	@Inject(at = @At("HEAD"), cancellable = true, method = "isCamera")
+	public void isCamera(CallbackInfoReturnable<Boolean> info) {
+		if (Freecam.isFreecam) {
+		    info.setReturnValue(true);
+		    info.cancel();
+		}
 	}
 	
 	// IGNORE
