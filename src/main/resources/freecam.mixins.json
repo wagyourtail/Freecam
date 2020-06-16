@@ -11,7 +11,8 @@
     "ClientPlayerInteractionManagerMixin",
     "InGameHudMixin",
     "CameraMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "EntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
