@@ -3,20 +3,19 @@ package xyz.wagyourtail.freecam;
 import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
-import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.input.KeyboardInput;
+import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
 import xyz.wagyourtail.freecam.event.KeyEvent;
 
 public class Freecam implements ClientModInitializer {
 	public static final String MOD_ID = "freecam";
 	public static MinecraftClient mc;
-	private static FabricKeyBinding keyBinding;
+	private static KeyBinding keyBinding;
 	public static CameraEntity fakePlayer;
 	public static float speed;
 	private static int savedPerspective;
@@ -56,9 +55,11 @@ public class Freecam implements ClientModInitializer {
 		mc = MinecraftClient.getInstance();
 		speed = .25F; //default speed
 		
-		keyBinding = FabricKeyBinding.Builder.create(new Identifier("freecam", "toggle"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_U, "Freecam").build();
-        KeyBindingRegistry.INSTANCE.addCategory("Freecam");
-        KeyBindingRegistry.INSTANCE.register(keyBinding);
+		keyBinding = new KeyBinding("freecam.toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_U, "Freecam");
+		KeyBindingHelper.registerKeyBinding(keyBinding);
+//		keyBinding = FabricKeyBinding.Builder.create(new Identifier("freecam", "toggle"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_U, "Freecam").build();
+//        KeyBindingRegistry.INSTANCE.addCategory("Freecam");
+//        KeyBindingRegistry.INSTANCE.register(keyBinding);
         
         
         ClientTickCallback.EVENT.register(e -> {
