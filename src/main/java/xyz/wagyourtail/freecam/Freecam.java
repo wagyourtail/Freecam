@@ -3,11 +3,12 @@ package xyz.wagyourtail.freecam;
 import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.options.Perspective;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.ActionResult;
 import xyz.wagyourtail.freecam.event.KeyEvent;
@@ -18,7 +19,7 @@ public class Freecam implements ClientModInitializer {
 	private static KeyBinding keyBinding;
 	public static CameraEntity fakePlayer;
 	public static float speed;
-	private static int savedPerspective;
+	private static Perspective savedPerspective;
 	public static boolean isFreecam = false;
 	
 	public void enable() {
@@ -29,8 +30,8 @@ public class Freecam implements ClientModInitializer {
 			fakePlayer.copyPositionAndRotation(mc.player);
 			fakePlayer.setHeadYaw(mc.player.headYaw);
 			fakePlayer.spawn();
-			savedPerspective = mc.options.perspective;
-			mc.options.perspective = 0;
+			savedPerspective = mc.options.getPerspective();
+			mc.options.method_31043(Perspective.FIRST_PERSON);
 			mc.setCameraEntity(fakePlayer);
 			
 			// instanceof neccecairy for baritone
@@ -40,7 +41,7 @@ public class Freecam implements ClientModInitializer {
     
     public void disable() {
     	isFreecam = false;
-    	mc.options.perspective = savedPerspective;
+    	mc.options.method_31043(savedPerspective);
 		mc.setCameraEntity(mc.player);
 		if (fakePlayer != null) fakePlayer.despawn();
 		fakePlayer = null;
@@ -62,9 +63,9 @@ public class Freecam implements ClientModInitializer {
 //        KeyBindingRegistry.INSTANCE.register(keyBinding);
         
         
-        ClientTickCallback.EVENT.register(e -> {
+		ClientTickEvents.END_CLIENT_TICK.register(e -> {
             if (mc.player == null && isFreecam  == true) {
-                mc.options.perspective = savedPerspective;
+                mc.options.method_31043(savedPerspective);
                 isFreecam = false;
                 fakePlayer = null;
             }
@@ -75,7 +76,7 @@ public class Freecam implements ClientModInitializer {
             
             if (fakePlayer != null) {
                 fakePlayer.setHealth(mc.player.getHealth());
-                if (mc.options.perspective != 0) mc.options.perspective = 0;
+                if (!mc.options.getPerspective().equals(Perspective.FIRST_PERSON)) mc.options.method_31043(Perspective.FIRST_PERSON);
                 
                 //the instanceof allows baritone to keep working as it replaces the mc.player.input
                 if (mc.player != null && mc.player.input instanceof KeyboardInput) mc.player.input = new DummyInput();
