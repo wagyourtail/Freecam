@@ -1,0 +1,19 @@
+package xyz.wagyourtail.freecam.mixins;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
+import xyz.wagyourtail.freecam.Freecam;
+
+@Mixin(ClientPlayerEntity.class)
+public class ClientPlayerEntityMixin {
+	
+	//cave culling fix
+	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;ZIZ)V"), index = 4)
+	public boolean isSpectator(boolean spectator) {
+		return ((AbstractClientPlayerEntity) this).isSpectator() || Freecam.isFreecam;
+	}
+}

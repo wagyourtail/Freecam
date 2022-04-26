@@ -7,6 +7,7 @@ import net.minecraft.client.input.Input;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.util.math.Vec3d;
 
@@ -38,12 +39,12 @@ public class CameraEntity extends OtherClientPlayerEntity {
 	// spawn and despawn entity from the world.
 	public void spawn() {
 		MinecraftClient mc = MinecraftClient.getInstance();
-		mc.world.addEntity(this.getEntityId(), this);
+		mc.world.addEntity(this.getId(), this);
 	}
 	
 	public void despawn() {
 		MinecraftClient mc = MinecraftClient.getInstance();
-		mc.world.removeEntity(this.getEntityId());
+		mc.world.removeEntity(this.getId(), Entity.RemovalReason.DISCARDED);
 	}
 	
 	

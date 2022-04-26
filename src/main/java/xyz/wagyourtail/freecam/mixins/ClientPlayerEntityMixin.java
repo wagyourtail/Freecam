@@ -29,7 +29,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	public void changeLookDirection(double dx, double dy) {
 		if (this.equals(client.player) && Freecam.isFreecam && Freecam.fakePlayer != null) {
 			Freecam.fakePlayer.changeLookDirection(dx, dy);
-			Freecam.fakePlayer.setHeadYaw(Freecam.fakePlayer.yaw);
+			Freecam.fakePlayer.setHeadYaw(Freecam.fakePlayer.getYaw());
 		} else {
 			super.changeLookDirection(dx, dy);
 		}

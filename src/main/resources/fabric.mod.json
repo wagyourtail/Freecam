@@ -6,7 +6,8 @@
   "name": "Freecam Mod",
   "description": "Freecam Mod Compliant with Fabritone",
   "authors": [
-    "wagyourtail"
+    "wagyourtail",
+    "Douile"
   ],
   "contact": {
     "homepage": "https://github.com/wagyourtail/Freecam/releases",
@@ -28,6 +29,6 @@
 
   "depends": {
     "fabricloader": ">=0.7.4",
-    "minecraft": "1.16.x"
+    "minecraft": "1.18.2"
   }
 }
