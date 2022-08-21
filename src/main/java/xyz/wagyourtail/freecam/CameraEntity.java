@@ -38,12 +38,12 @@ public class CameraEntity extends OtherClientPlayerEntity {
 	// spawn and despawn entity from the world.
 	public void spawn() {
 		MinecraftClient mc = MinecraftClient.getInstance();
-		mc.world.addEntity(this.getEntityId(), this);
+		mc.world.addEntity(this.getId(), this);
 	}
 	
 	public void despawn() {
 		MinecraftClient mc = MinecraftClient.getInstance();
-		mc.world.removeEntity(this.getEntityId());
+		mc.world.removeEntity(this.getId(), RemovalReason.DISCARDED);
 	}
 	
 	
