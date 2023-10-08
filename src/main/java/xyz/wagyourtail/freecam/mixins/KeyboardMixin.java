@@ -13,7 +13,7 @@ import xyz.wagyourtail.freecam.event.KeyEvent;
 @Mixin(Keyboard.class)
 class KeyboardMixin {
     
-	// key event mixin
+    // key event mixin
     @Inject(at = @At("HEAD"), method = "onKey", cancellable = true)
     private void onKeyMixin(long window, int key, int scancode, int i, int j, final CallbackInfo info) {
         ActionResult result = ((KeyEvent) KeyEvent.EVENT.invoker()).interact(window, key, scancode, i, j);

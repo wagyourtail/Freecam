@@ -12,14 +12,14 @@ import xyz.wagyourtail.freecam.Freecam;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
-	
-	// this fixes the hotbar not being correct
-	@Inject(at = @At("HEAD"), method = "getCameraPlayer", cancellable = true)
-	private void getCameraPlayer(CallbackInfoReturnable<PlayerEntity> info) {
-		if (Freecam.isFreecam) {
-			MinecraftClient mc = MinecraftClient.getInstance();
-			info.setReturnValue((PlayerEntity) mc.player);
-			info.cancel();
-		}
-	}
+    
+    // this fixes the hotbar not being correct
+    @Inject(at = @At("HEAD"), method = "getCameraPlayer", cancellable = true)
+    private void getCameraPlayer(CallbackInfoReturnable<PlayerEntity> info) {
+        if (Freecam.isFreecam) {
+            MinecraftClient mc = MinecraftClient.getInstance();
+            info.setReturnValue((PlayerEntity) mc.player);
+            info.cancel();
+        }
+    }
 }

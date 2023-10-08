@@ -1,159 +1,159 @@
 plugins {
-	id 'java'
-	id 'xyz.wagyourtail.unimined' version '1.1.0' apply false
-	id 'xyz.wagyourtail.multiversion-root'
+    id 'java'
+    id 'xyz.wagyourtail.unimined' version '1.1.0' apply false
+    id 'xyz.wagyourtail.multiversion-root'
 }
 
 version = project.mod_version
 group = project.maven_group
 
 subprojects {
-	apply(plugin: 'xyz.wagyourtail.unimined')
+    apply(plugin: 'xyz.wagyourtail.unimined')
 
-	version = project.mod_version + "+mc.${project.minecraft_version}"
-	group = project.maven_group
-	base {
-		archivesName.set project.archives_base_name
-	}
+    version = project.mod_version + "+mc.${project.minecraft_version}"
+    group = project.maven_group
+    base {
+        archivesName.set project.archives_base_name
+    }
 
-	java {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
-		withSourcesJar()
-	}
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        withSourcesJar()
+    }
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	unimined.useGlobalCache = false
+    unimined.useGlobalCache = false
 
-	unimined.minecraft {
-		version project.minecraft_version
-		mappings {
-			yarn project.yarn_mappings
-			var extra = project.file("$projectDir/extra_mappings.tiny")
-			if (extra.exists()) {
-				mapping(project.files(extra), "merged") {
-					sourceNamespace "yarn"
-					outputs("merged", true) { ["yarn"] }
-				}
-				devNamespace "merged"
-			}
-		}
+    unimined.minecraft {
+        version project.minecraft_version
+        mappings {
+            yarn project.yarn_mappings
+            var extra = project.file("$projectDir/extra_mappings.tiny")
+            if (extra.exists()) {
+                mapping(project.files(extra), "merged") {
+                    sourceNamespace "yarn"
+                    outputs("merged", true) { ["yarn"] }
+                }
+                devNamespace "merged"
+            }
+        }
 
-		fabric {
-			loader project.loader_version
-		}
-	}
+        fabric {
+            loader project.loader_version
+        }
+    }
 
-	dependencies {
-		modImplementation fabricApi.module("fabric-api-base", project.fabric_api_version)
-		modImplementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
-		modImplementation fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
-		include fabricApi.module("fabric-api-base", project.fabric_api_version)
-		include fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
-		include fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
-	}
+    dependencies {
+        modImplementation fabricApi.module("fabric-api-base", project.fabric_api_version)
+        modImplementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
+        modImplementation fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
+        include fabricApi.module("fabric-api-base", project.fabric_api_version)
+        include fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
+        include fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
+    }
 
-	processResources {
-		inputs.property "version", project.version
+    processResources {
+        inputs.property "version", project.version
 
-		filesMatching("fabric.mod.json") {
-			expand "version": project.version
-		}
-	}
+        filesMatching("fabric.mod.json") {
+            expand "version": project.version
+        }
+    }
 
-	jar {
-		from "LICENSE"
-	}
+    jar {
+        from "LICENSE"
+    }
 }
 
 java {
-	targetCompatibility = JavaVersion.VERSION_1_8
-	sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 repositories {
-	mavenLocal()
-	maven { url "https://maven.wagyourtail.xyz/releases" }
-	maven { url "https://maven.wagyourtail.xyz/snapshots" }
-	maven { url "https://maven.neoforged.net/releases"}
-	maven {
-		name = 'Fabric'
-		url = 'https://maven.fabricmc.net/'
-	}
-	maven {
-		name = 'Minecraft'
-		url = 'https://libraries.minecraft.net/'
-	}
-	mavenCentral()
-	gradlePluginPortal()
+    mavenLocal()
+    maven { url "https://maven.wagyourtail.xyz/releases" }
+    maven { url "https://maven.wagyourtail.xyz/snapshots" }
+    maven { url "https://maven.neoforged.net/releases"}
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+        name = 'Minecraft'
+        url = 'https://libraries.minecraft.net/'
+    }
+    mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
-	compileOnly("net.fabricmc:fabric-loader:${project.loader_version}")
-	project(":1.17.1").configurations.minecraftLibraries.dependencies.forEach {
-		compileOnly it
-	}
+    compileOnly("net.fabricmc:fabric-loader:${project.loader_version}")
+    project(":1.17.1").configurations.minecraftLibraries.dependencies.forEach {
+        compileOnly it
+    }
 }
 
 tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
+    options.encoding = "UTF-8"
 
-	def targetVersion = 8
-	if (JavaVersion.current().isJava9Compatible()) {
-		it.options.release = targetVersion
-	}
+    def targetVersion = 8
+    if (JavaVersion.current().isJava9Compatible()) {
+        it.options.release = targetVersion
+    }
 }
 
 import org.apache.tools.ant.filters.ExpandProperties
 
 task createDist() {
-	for (String mcVersion in project.mc_versions.split(" ")) {
-		dependsOn ":${mcVersion}:build"
-	}
-	doLast {
-		var dist = file("$projectDir/dist")
-		dist.mkdirs()
-		for (String mcVersion in project.mc_versions.split(" ")) {
-			var jar = childProjects.get(mcVersion).tasks.getByName("remapJar")
-			var jarFile = jar.outputs.files.singleFile
-			// copy jar to dist
-			copy {
-				from jarFile
-				into dist
-			}
-		}
-	}
+    for (String mcVersion in project.mc_versions.split(" ")) {
+        dependsOn ":${mcVersion}:build"
+    }
+    doLast {
+        var dist = file("$projectDir/dist")
+        dist.mkdirs()
+        for (String mcVersion in project.mc_versions.split(" ")) {
+            var jar = childProjects.get(mcVersion).tasks.getByName("remapJar")
+            var jarFile = jar.outputs.files.singleFile
+            // copy jar to dist
+            copy {
+                from jarFile
+                into dist
+            }
+        }
+    }
 }
 
 build.finalizedBy createDist
 
 multiversion {
-	def mcSubproject = { mcVersion ->
-		subproject(mcVersion) {
-			version mcVersion
-			configuration("minecraft")
-			configuration("modImplementation")
-			splitJar {
-				filesMatching("fabric.mod.json") {
-					expand([
-							"version": project.version,
-							"mc_version": mcVersion
-					])
-				}
-			}
-		}
-	}
+    def mcSubproject = { mcVersion ->
+        subproject(mcVersion) {
+            version mcVersion
+            configuration("minecraft")
+            configuration("modImplementation")
+            splitJar {
+                filesMatching("fabric.mod.json") {
+                    expand([
+                            "version": project.version,
+                            "mc_version": mcVersion
+                    ])
+                }
+            }
+        }
+    }
 
-	for (final String mcVersion in project.mc_versions.split(" ")) {
-		mcSubproject(mcVersion)
-	}
+    for (final String mcVersion in project.mc_versions.split(" ")) {
+        mcSubproject(mcVersion)
+    }
 
-	mergeName { a ->
-		a.moduleVersion.id.group + ":" + (
-			a.name.startsWith("minecraft") ? "minecraft" : a.name
-		)
-	}
+    mergeName { a ->
+        a.moduleVersion.id.group + ":" + (
+            a.name.startsWith("minecraft") ? "minecraft" : a.name
+        )
+    }
 }

@@ -13,23 +13,23 @@ import xyz.wagyourtail.freecam.Freecam;
 @Mixin(Camera.class)
 public class CameraMixin {
     
-	// makes mc.player render while in freecam.
+    // makes mc.player render while in freecam.
     
     
-	@Inject(at = @At("HEAD"), cancellable = true, method ="getFocusedEntity")
-	public void getFocusedEntity(CallbackInfoReturnable<Entity> info) {
+    @Inject(at = @At("HEAD"), cancellable = true, method ="getFocusedEntity")
+    public void getFocusedEntity(CallbackInfoReturnable<Entity> info) {
         MinecraftClient mc = MinecraftClient.getInstance();
-	    if (Freecam.isFreecam) {
-	        info.setReturnValue(mc.player);
-	        info.cancel();
-	    }
-	}
-	
-	@Inject(at = @At("HEAD"), cancellable = true, method= "isThirdPerson")
-	public void isThirdPerson(CallbackInfoReturnable<Boolean> info) {
-		if (Freecam.isFreecam) {
-		    info.setReturnValue(true);
-		    info.cancel();
-		}
-	}
+        if (Freecam.isFreecam) {
+            info.setReturnValue(mc.player);
+            info.cancel();
+        }
+    }
+    
+    @Inject(at = @At("HEAD"), cancellable = true, method= "isThirdPerson")
+    public void isThirdPerson(CallbackInfoReturnable<Boolean> info) {
+        if (Freecam.isFreecam) {
+            info.setReturnValue(true);
+            info.cancel();
+        }
+    }
 }
