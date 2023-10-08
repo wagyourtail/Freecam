@@ -1,5 +1,6 @@
 package xyz.wagyourtail.freecam.mixins;
 
+import merged.net.minecraft.network.Packet;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -9,20 +10,20 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import merged.net.minecraft.client.MinecraftClient;
+import merged.net.minecraft.client.network.AbstractClientPlayerEntity;
+import merged.net.minecraft.client.network.ClientPlayerEntity;
+import merged.net.minecraft.client.world.ClientWorld;
 import xyz.wagyourtail.freecam.Freecam;
+import xyz.wagyourtail.multiversion.injected.split.annotations.Versioned;
 
 @Mixin(ClientPlayerEntity.class)
-public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
+public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
 	
 	@Shadow
 	@Final
 	protected MinecraftClient client;
-	
 	
 	//redirect mouse movement look stuff to the freecam entity.
 	@Override
@@ -34,7 +35,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 			super.changeLookDirection(dx, dy);
 		}
 	}
-	
+
 	// this allows for the player to move from baritone.
 	@Inject(at = @At("HEAD"), cancellable = true, method = "isCamera")
 	public void isCamera(CallbackInfoReturnable<Boolean> info) {
@@ -45,6 +46,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	}
 	
 	// IGNORE
+	@Versioned(versions = {})
 	public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
 		super(world, profile);
 		// TODO Auto-generated constructor stub

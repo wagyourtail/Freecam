@@ -1,0 +1,7 @@
+tiny	2	0	yarn	merged
+c	net/minecraft/client/options/KeyBinding	net/minecraft/client/option/KeyBinding
+c	net/minecraft/client/options/Perspective	net/minecraft/client/option/Perspective
+c	net/minecraft/client/options/GameOptions	net/minecraft/client/option/GameOptions
+	m	(Lnet/minecraft/client/options/Perspective;)V	method_31043	setPerspective
+c	net/minecraft/entity/Entity	net/minecraft/entity/Entity
+	m	()I	getEntityId	getId

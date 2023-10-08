@@ -5,9 +5,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
-import net.minecraft.entity.Entity;
+import merged.net.minecraft.client.MinecraftClient;
+import merged.net.minecraft.client.render.Camera;
+import merged.net.minecraft.entity.Entity;
 import xyz.wagyourtail.freecam.Freecam;
 
 @Mixin(Camera.class)

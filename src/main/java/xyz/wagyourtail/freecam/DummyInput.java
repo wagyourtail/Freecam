@@ -1,6 +1,6 @@
 package xyz.wagyourtail.freecam;
 
-import net.minecraft.client.input.Input;
+import merged.net.minecraft.client.input.Input;
 
 public class DummyInput extends Input {
 	public DummyInput() {

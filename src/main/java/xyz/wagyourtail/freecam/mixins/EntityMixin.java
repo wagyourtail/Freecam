@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.entity.Entity;
+import merged.net.minecraft.entity.Entity;
 import xyz.wagyourtail.freecam.Freecam;
 
 @Mixin(Entity.class)

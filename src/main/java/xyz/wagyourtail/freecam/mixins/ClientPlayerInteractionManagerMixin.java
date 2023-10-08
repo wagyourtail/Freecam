@@ -5,11 +5,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import merged.net.minecraft.client.network.ClientPlayerInteractionManager;
+import merged.net.minecraft.entity.Entity;
+import merged.net.minecraft.entity.player.PlayerEntity;
+import merged.net.minecraft.util.ActionResult;
+import merged.net.minecraft.util.Hand;
 import xyz.wagyourtail.freecam.Freecam;
 
 import org.spongepowered.asm.mixin.injection.At;

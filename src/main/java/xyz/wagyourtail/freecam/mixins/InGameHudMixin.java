@@ -5,9 +5,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.entity.player.PlayerEntity;
+import merged.net.minecraft.client.MinecraftClient;
+import merged.net.minecraft.client.gui.hud.InGameHud;
+import merged.net.minecraft.entity.player.PlayerEntity;
 import xyz.wagyourtail.freecam.Freecam;
 
 @Mixin(InGameHud.class)
